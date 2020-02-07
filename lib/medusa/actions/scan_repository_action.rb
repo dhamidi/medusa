@@ -1,18 +1,14 @@
 # frozen_string_literal: true
 
-class ScanRepositoryAction
-  def initialize(context)
-    @context = context
-  end
-
+class ScanRepositoryAction < BaseAction
   def call(repository_id)
     after = last_scanned_commit_id(repository_id)
     commits = @context.git_client.commits(repository_id, limit: 10, after: after)
-    if commits&.size&.positive?
-      store_most_recent_commit_id(repository_id, commits.first.id)
-    end
+    store_most_recent_commit_id(repository_id, commits.first.id) if commits&.size&.positive?
     commits
   end
+
+  private
 
   def last_scanned_commit_id(repository_id)
     @context.key_value_store.fetch("scan/#{repository_id}/last_scanned", nil)

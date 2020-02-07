@@ -1,0 +1,161 @@
+---
+- id: ae34a4f5da3fbfe67b132b7080d94259285289e3
+  message: "Add Hash#each_value and Hash#each_key cop (#7677)\n\n"
+- id: 0546b0b129d45e24d465849bc057508173c08149
+  message: |-
+    Merge pull request #7692 from marcandre/parent_doc
+
+    NodePattern: document ^ [doc]
+- id: f465f29a87a10cc1761eb3e8dc9868eee003870e
+  message: 'NodePattern: document ^ [doc]
+
+'
+- id: b36115875369a88c1d01bc0be2a81128b7392d88
+  message: |+
+    Improve wording in README (#7690)
+
+
+- id: 5c78b39a4e899b924a70c17487e0335ad7ff3522
+  message: |
+    Show pending status in cop status of manual
+
+    Follow up of #5979.
+
+    This PR shows pending status in cop status of manual.
+    The pending status is not enabled status and may lead to misreading.
+- id: 7989a20638e37b39548716cf0ef4bf6d63efcd74
+  message: 'Fix the changelog
+
+'
+- id: b5fc8207d85074becb31df62b24033b3133c2878
+  message: |
+    Add `AllowGemfileRubyComment` option to `Layout/LeadingCommentSpace` (#7577)
+
+    This PR remove the offense for comments that starts with `#ruby` as this style is
+    a valid syntax to write Ruby versions in Gemfile that can be used with bundler, RVM, and others.
+
+    Example:
+
+    ```ruby
+      # Specific version (comment) will be used by RVM
+      #ruby=2.7.0
+      #ruby-gemset=myproject
+      ruby '~> 2.7.0'
+    ```
+
+    Co-authored-by: Bozhidar Batsov <bozhidar.batsov@gmail.com>
+- id: 6a166d032b8d9c8877c81cd3b14bbc95ae1eeab8
+  message: 'Add line length autocorrect for blocks
+
+'
+- id: fd2b05a3338368a706761d7825b1c728a228b180
+  message: |+
+    Add cops to enforce use of `transform_keys` and `transform_values` (#7663)
+
+
+- id: 96786e2f378bbcb9800c7bf2520f2884526e83b0
+  message: |
+    [Fix #7619] Support autocorrect of legacy names for `Migration/DepartmentName`
+
+    Fixes #7619.
+
+    This PR supports autocorrect of legacy cop names for
+    `Migration/DepartmentName`.
+
+    Auto-correction for legacy cop names complements legacy department names.
+    Migration to new cop names are expected to be modified using Gry gem.
+    https://github.com/pocke/gry
+- id: e3768b6f0e87d1cb77de6601b8bc80be0727bc64
+  message: |
+    Update Copyright year to 2020
+
+    This PR updates Copyright year to 2020.
+- id: e3e85b652ee31a4bf23f0ca441b0c09afbb6c07e
+  message: |-
+    Merge pull request #7652 from masarakki/allow-paremeter-pp
+
+    allow paremeter name `pp` for `pretty_print`
+- id: 53a9c4cd515ff79e1c481c4116d960ce8ab7bc52
+  message: |
+    [Fix #7675] Fix a false negative for `Layout/SpaceBeforeFirstArg`
+
+    Fixes #7675.
+
+    This PR fixes a false negative for `Layout/SpaceBeforeFirstArg`
+    when a vertical argument positions are aligned.
+- id: 71140f877f0d80889e3f4a1037fa82043831707c
+  message: 'allow-parameter-pp
+
+'
+- id: 2d02b6e91b70ce775003fcc187f0046a76eac88f
+  message: |-
+    Merge pull request #7681 from picandocodigo/master
+
+    Updates docs to be more explicit when using formatters
+- id: d9682633719f0185bad14071c6c93968cf2bb886
+  message: 'Updates docs to be more explicit about how to use formatters
+
+'
+- id: 442d34868a0860e2bab4e0213dc8dad358191303
+  message: |-
+    Merge pull request #7676 from drewcimino/docs-update-targetruby-preference
+
+    Update documentation to reflect current precedence in TargetRuby
+- id: 7fd1ecc009206c690d591a1700a9e73466cfec96
+  message: 'Update docs to reflect current precedence in TargetRuby
+
+'
+- id: 0cfc6dd90dd6a23cafc7eeed18558e6a9b100e69
+  message: |-
+    Merge pull request #7679 from koic/workaround_for_cc_test_reporter_with_simplecov
+
+    Workaround for cc-test-reporter with SimpleCov 0.18
+- id: 9477e64390942240b3f7b7ccb7a6d06dbe9fe3ef
+  message: |
+    Workaround for cc-test-reporter with SimpleCov 0.18
+
+    This PR fixes the following build error when using
+    cc-test-reporter with SimpleCov 0.18.
+
+    ```console
+    $ #!/bin/bash -eo pipefail
+    ./tmp/cc-test-reporter before-build
+    COVERAGE=true bundle exec rake spec
+    ./tmp/cc-test-reporter format-coverage --output
+    tmp/codeclimate.$CIRCLE_JOB.json
+    Starting test-queue master (/tmp/test_queue_228_47138309905180.sock)
+
+    ==> Summary (2 workers in 36.1115s)
+
+        [ 1]                         8753 examples, 0 failures, 9 pending
+        254 suites in 36.1034s      (pid 160 exit 0 )
+        [ 2]                         6772 examples, 0 failures, 2 pending
+        239 suites in 36.1054s      (pid 161 exit 0 )
+
+    Coverage report generated for RSpec, rspec-1, rspec-2, rspec-fork-163,
+    rspec-fork-164, rspec-fork-165 to /home/circleci/project/coverage. 21266
+    / 21459 LOC (99.1%) covered.
+    Error: json: cannot unmarshal object into Go struct field input.coverage
+    of type []formatters.NullInt
+    Usage:
+      cc-test-reporter format-coverage [coverage file] [flags]
+
+    Flags:
+          --add-prefix string   add this prefix to file paths
+      -t, --input-type string   type of input source to use [clover,
+    cobertura, coverage.py, excoveralls, gcov, gocov, jacoco, lcov,
+    simplecov, xccov]
+      -o, --output string       output path (default "coverage/codeclimate.json")
+      -p, --prefix string       the root directory where the
+        coverage analysis was performed (default "/home/circleci/project")
+
+    Global Flags:
+      -d, --debug   run in debug mode
+
+    Exited with code exit status 255
+    ```
+
+    https://circleci.com/gh/rubocop-hq/rubocop/83619
+
+    This patch is a workaround until the following issue will be resolved.
+    https://github.com/codeclimate/test-reporter/issues/418

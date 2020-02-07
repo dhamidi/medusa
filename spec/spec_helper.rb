@@ -16,6 +16,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'medusa'
+require 'pry'
 require 'test_context'
 require 'production_context'
 
