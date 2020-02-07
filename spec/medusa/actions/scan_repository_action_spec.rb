@@ -1,15 +1,27 @@
 # frozen_string_literal: true
 
 RSpec.describe ScanRepositoryAction do
-  before :context do
-    @scan = described_class.new(settings)
-    @commits = scan.call('github.com/rubocop-hq/rubocop')
-    @actual_commits = settings.git_client.commits('github.com/rubocop-hq/rubocop', limit: 10)
+  let(:scan) { described_class.new(settings) }
+  let(:actual_commits) { settings.git_client.commits('github.com/rubocop-hq/rubocop') }
+
+  before do
+    settings.key_value_store.clear
   end
-  attr_reader :commits, :actual_commits, :scan
 
   it 'scans ten commits by default' do
+    commits = scan.call('github.com/rubocop-hq/rubocop')
     expect(commits).to match_array(Array.new(10) { be_a(Commit) })
+  end
+
+  context 'when a repository is scanned multiple times' do
+    it 'only returns commits after the last scan' do
+      initial_scan = scan.call('github.com/rubocop-hq/rubocop')
+      expected_commits = settings.git_client.commits('github.com/rubocop-hq/rubocop',
+                                                     after: initial_scan.first.id)
+
+      next_scan = scan.call('github.com/rubocop-hq/rubocop')
+      expect(next_scan).to eq(expected_commits)
+    end
   end
 
   context 'when the repository does not exist' do
