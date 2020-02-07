@@ -6,4 +6,3 @@ class BaseQuery
   end
   attr_reader :context
 end
-

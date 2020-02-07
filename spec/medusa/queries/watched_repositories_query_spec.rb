@@ -8,9 +8,14 @@ RSpec.describe WatchedRepositoriesQuery do
   end
 
   it 'returns all repositories that have been watched' do
-    WatchRepositoryAction.new(settings).call('rubocop-hq/rubocop')
-    WatchRepositoryAction.new(settings).call('rails/rails')
-    expect(watched_repositories.call).to eql(['rubocop-hq/rubocop', 'rails/rails'])
+    WatchRepositoryAction.new(settings).call('rubocop-hq/rubocop', 'Fix')
+    WatchRepositoryAction.new(settings).call('rails/rails', 'Merge pull request')
+    expect(watched_repositories.call).to eq(
+      [
+        Subscription.new(repository: 'rubocop-hq/rubocop', pattern: 'Fix'),
+        Subscription.new(repository: 'rails/rails', pattern: 'Merge pull request')
+      ]
+    )
   end
 
   context 'when no repositories have been watched yet' do

@@ -15,5 +15,9 @@ AllCops:
 Layout/LineLength:
   Max: 120
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/medusa/**/*_spec.rb
+
 Style/Documentation:
   Enabled: false

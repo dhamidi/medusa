@@ -19,4 +19,5 @@ module Medusa
   end
 
   ActiveModel::Type.register(:sha1, Sha1Type)
+  ActiveModel::Type.register(:repository_id, RepositoryIdType)
 end
