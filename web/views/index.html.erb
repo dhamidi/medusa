@@ -1,5 +1,19 @@
 <section class="font-mono">
   <h1 class="font-bold text-xl">Your subscriptions</h1>
+  <div class="border border-gray-900 p-5 mb-2">
+    <form action="/watch" method="POST">
+      <p>
+        <label for="watch-repository">Watch github.com/</label><input placeholder="rails/rails" name="repository" type="text" required id="watch-repository">
+      </p>
+      <p>
+        <label for="watch-pattern">for</label>
+        <input id="watch-pattern" name="pattern" type="text" placeholder="Fix">
+      </p>
+      <p class="mt-2">
+        <button type="submit"> [Watch]</button>
+      </p>
+     </form>
+  </div>
   <% if subscriptions.size.zero? %>
   <p class="p-5 bg-blue-300 text-blue-900 border border-blue-900">
     You have no active subscriptions.
@@ -7,9 +21,20 @@
   <% else %>
     <% subscriptions.each do |s| %>
       <div>
+        <% if s.last_scanned != 'unknown' %>
+          <a href=<%= "https://github.com/#{s.repository}/commit/#{s.last_scanned}".inspect %>>
+            [<%= s.last_scanned[0..7] %>]
+          </a>
+        <% else %>
+          [unknown]
+        <% end %>
         <a href="https://github.com/<%= s.repository %>"><%= s.repository %></a>
         <em>commits matching</em>
         <%= s.pattern.inspect %> 
+        <form class="inline" action="/scan" method="POST">
+          <input type="hidden" name="repository" value=<%= s.repository.inspect %>>
+          <button type="submit" class="font-bold">[Scan]</button>
+        </form>
       </div>
     <% end %>
   <% end %>

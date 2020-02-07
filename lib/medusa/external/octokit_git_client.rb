@@ -8,8 +8,6 @@ class OctokitGitClient
   end
 
   def commits(repository, limit: 10, after: nil)
-    return nil unless repository.start_with?('github.com/')
-
     octokit_commits = fetch_commits(repository, after: after)
     octokit_commits.take(limit).each_with_object([]) do |commit, result|
       result << Commit.new(

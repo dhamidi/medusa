@@ -9,7 +9,30 @@ set :medusa, Settings.new(
   key_value_store: PstoreKeyValueStore.new('production.pstore')
 )
 
+helpers do
+  def medusa
+    settings.medusa
+  end
+end
+
 get '/' do
-  subscriptions = WatchedRepositoriesQuery.new(settings.medusa).call
-  erb :'index.html', locals: { subscriptions: subscriptions }
+  subscriptions = DashboardQuery.new(medusa).call
+  erb :'index.html', locals: {
+    subscriptions: subscriptions
+  }
+end
+
+post '/scan' do
+  watched = WatchedRepositoriesQuery.new(medusa).call
+  halt unless watched.map(&:repository).include?(params[:repository])
+  ScanRepositoryAction.async(medusa, params[:repository])
+  redirect '/'
+end
+
+post '/watch' do
+  WatchRepositoryAction.new(medusa).call(
+    params[:repository],
+    params[:pattern]
+  )
+  redirect '/'
 end
