@@ -12,3 +12,4 @@ group :test do
 end
 
 gem 'rubocop', '~> 0.79.0'
+gem 'sinatra'

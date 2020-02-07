@@ -1,0 +1,16 @@
+{
+  "name": "medusa-web",
+  "version": "1.0.0",
+  "description": "Watch and alert based on commits in GitHub repositories.",
+  "main": "src/index.js",
+  "repository": "https://github.com/dhamidi/medusa",
+  "author": "Dario Hamidi <dario.hamidi@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "parcel-bundler": "^1.12.4",
+    "postcss": "^7.0.26",
+    "postcss-cli": "^7.1.0",
+    "tailwindcss": "^1.2.0"
+  }
+}

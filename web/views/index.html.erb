@@ -1,0 +1,16 @@
+<section class="font-mono">
+  <h1 class="font-bold text-xl">Your subscriptions</h1>
+  <% if subscriptions.size.zero? %>
+  <p class="p-5 bg-blue-300 text-blue-900 border border-blue-900">
+    You have no active subscriptions.
+  </p>
+  <% else %>
+    <% subscriptions.each do |s| %>
+      <div>
+        <a href="https://github.com/<%= s.repository %>"><%= s.repository %></a>
+        <em>commits matching</em>
+        <%= s.pattern.inspect %> 
+      </div>
+    <% end %>
+  <% end %>
+</section>
