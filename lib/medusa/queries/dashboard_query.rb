@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class DashboardQuery < BaseQuery
-  class Subscription
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-
+  class Subscription < BaseModel
     attribute :repository, :string
     attribute :pattern, :string
     attribute :last_scanned, :string

@@ -2,10 +2,7 @@
 
 RSpec.shared_context 'production_settings' do
   before(:context) do
-    @settings = Settings.new(
-      git_client: OctokitGitClient.new,
-      key_value_store: PstoreKeyValueStore.new('production.pstore')
-    )
+    @settings = Settings.default
   end
   attr_reader :settings
 end
