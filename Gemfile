@@ -10,3 +10,5 @@ group :test do
   gem 'pry-byebug'
   gem 'rspec'
 end
+
+gem 'rubocop', '~> 0.79.0'
