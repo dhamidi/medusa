@@ -5,7 +5,7 @@ RSpec.describe DashboardQuery do
     repository_id = 'github.com/rubocop-hq/rubocop'
     WatchRepositoryAction.new(settings).call(repository_id, 'Fix')
     WatchRepositoryAction.new(settings).call('github.com/rails/rails', 'Fix')
-    ScanRepositoryAction.new(settings).call(repository_id)
+    MatchRepositoryAction.new(settings).call(repository_id)
     @most_recent_commit_id = settings.git_client.commits(
       repository_id, limit: 1
     ).first.id
@@ -27,6 +27,13 @@ RSpec.describe DashboardQuery do
     expect(result).to contain_exactly(
       be_a(DashboardQuery::Subscription),
       have_attributes(last_scanned: most_recent_commit_id)
+    )
+  end
+
+  it 'includes all matches' do
+    expect(result).to contain_exactly(
+      be_a(DashboardQuery::Subscription),
+      have_attributes(matches: satisfy { |commits| !commits.empty? })
     )
   end
 

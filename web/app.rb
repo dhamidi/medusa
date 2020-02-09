@@ -25,7 +25,7 @@ end
 post '/scan' do
   watched = WatchedRepositoriesQuery.new(medusa).call
   halt unless watched.map(&:repository).include?(params[:repository])
-  ScanRepositoryAction.async(medusa, params[:repository])
+  MatchRepositoryAction.async(medusa, params[:repository])
   redirect '/'
 end
 

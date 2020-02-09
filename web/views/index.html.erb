@@ -21,20 +21,32 @@
   <% else %>
     <% subscriptions.each do |s| %>
       <div>
-        <% if s.last_scanned != 'unknown' %>
-          <a href=<%= "https://github.com/#{s.repository}/commit/#{s.last_scanned}".inspect %>>
-            [<%= s.last_scanned[0..7] %>]
-          </a>
-        <% else %>
-          [unknown]
-        <% end %>
-        <a href="https://github.com/<%= s.repository %>"><%= s.repository %></a>
-        <em>commits matching</em>
-        <%= s.pattern.inspect %> 
-        <form class="inline" action="/scan" method="POST">
-          <input type="hidden" name="repository" value=<%= s.repository.inspect %>>
-          <button type="submit" class="font-bold">[Scan]</button>
-        </form>
+        <div>
+          <% if s.last_scanned != 'unknown' %>
+            <a href=<%= "https://github.com/#{s.repository}/commit/#{s.last_scanned}".inspect %>>
+              [<%= s.last_scanned[0..7] %>]
+            </a>
+          <% else %>
+            [unknown]
+          <% end %>
+          <a href="https://github.com/<%= s.repository %>"><%= s.repository %></a>
+          <em>commits matching</em>
+          <%= s.pattern.inspect %> 
+          <form class="inline" action="/scan" method="POST">
+            <input type="hidden" name="repository" value=<%= s.repository.inspect %>>
+            <button type="submit" class="font-bold">[Scan]</button>
+          </form>
+         </div>
+         <div>
+           <details>
+             <summary><%= s.matches.empty? ? 'No matches' : "#{s.matches.size} matches" %></summary>
+             <% s.matches.each do |commit| %>
+               <a href=<%= "https://github.com/#{s.repository}/commit/#{commit.id}".inspect %>>
+                 [<%= commit.id[0..7] %>] <%= commit.message[0..50] %>
+               </a>
+             <% end %>
+           </details>
+         </div>
       </div>
     <% end %>
   <% end %>

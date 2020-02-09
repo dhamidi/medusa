@@ -5,6 +5,7 @@ class DashboardQuery < BaseQuery
     attribute :repository, :string
     attribute :pattern, :string
     attribute :last_scanned, :string
+    attribute :matches
 
     def last_scanned
       super || 'unknown'
@@ -15,6 +16,9 @@ class DashboardQuery < BaseQuery
     WatchedRepositoriesQuery.new(context).call.map do |subscription|
       result = Subscription.new(subscription.attributes)
       result.last_scanned = LastScannedCommitQuery.new(context).call(
+        result.repository
+      )
+      result.matches = MatchesForRepositoryQuery.new(context).call(
         result.repository
       )
       result

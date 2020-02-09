@@ -14,5 +14,10 @@ class BaseAction
   def query(query_class, *params)
     query_class.new(context).call(*params)
   end
+
+  def execute(action_class, *params)
+    action_class.new(context).call(*params)
+  end
+
   attr_reader :context
 end

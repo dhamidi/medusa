@@ -8,12 +8,14 @@ class OctokitGitClient
   end
 
   def commits(repository, limit: 10, after: nil)
-    octokit_commits = fetch_commits(repository, after: after)
-    octokit_commits.take(limit).each_with_object([]) do |commit, result|
-      result << Commit.new(
-        id: commit[:sha],
-        message: commit[:commit][:message]
-      )
+    octokit_commits = fetch_commits(repository)
+    newer_commits = octokit_commits.take_while do |c|
+      next true if after.nil?
+
+      c.id != after
+    end
+    newer_commits.take(limit).each_with_object([]) do |commit, result|
+      result << to_commit(commit)
     end
   rescue Octokit::NotFound
     nil
@@ -21,12 +23,17 @@ class OctokitGitClient
 
   private
 
-  def fetch_commits(repository, after:)
+  def to_commit(github_commit)
+    Commit.new(
+      id: github_commit[:sha],
+      message: github_commit[:commit][:message]
+    )
+  end
+
+  def fetch_commits(repository)
     repository_name = repository.sub('github.com/', '')
     repository = client.repository repository_name
-    params = {}
-    params[:after] = after if after
-    repository.rels[:commits].get(query: params).data
+    repository.rels[:commits].get.data
   end
 
   attr_reader :client
