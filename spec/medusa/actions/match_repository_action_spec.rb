@@ -2,7 +2,7 @@
 
 RSpec.describe MatchRepositoryAction do
   let(:match_repository) { described_class.new(settings) }
-  
+
   before(:context) do
     @repository = 'github.com/rubocop-hq/rubocop'
     @recent_commits = settings.git_client.commits(repository)

@@ -34,7 +34,8 @@
           <%= s.pattern.inspect %> 
           <form class="inline" action="/scan" method="POST">
             <input type="hidden" name="repository" value=<%= s.repository.inspect %>>
-            <button type="submit" class="font-bold">[Scan]</button>
+            <button type="submit" formaction="/scan" class="font-bold">[Scan]</button>
+            <button type="submit" formaction="/unwatch" class="font-bold">[Unwatch]</button>
           </form>
          </div>
          <div>

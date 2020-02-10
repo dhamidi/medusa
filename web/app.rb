@@ -36,3 +36,10 @@ post '/watch' do
   )
   redirect '/'
 end
+
+post '/unwatch' do
+  UnwatchRepositoryAction.new(medusa).call(
+    params[:repository]
+  )
+  redirect '/'
+end

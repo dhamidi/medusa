@@ -17,7 +17,7 @@ class OctokitGitClient
     newer_commits.take(limit).each_with_object([]) do |commit, result|
       result << to_commit(commit)
     end
-  rescue Octokit::NotFound
+  rescue Octokit::NotFound, OctokitGit::InvalidRepository
     nil
   end
 
