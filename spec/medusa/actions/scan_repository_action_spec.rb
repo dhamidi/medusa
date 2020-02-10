@@ -13,6 +13,12 @@ RSpec.describe ScanRepositoryAction do
     expect(commits).to match_array(Array.new(10) { be_a(Commit) })
   end
 
+  it 'stores the commits in the key_value_store' do
+    scan.call('github.com/rubocop-hq/rubocop')
+    stored_commits = settings.key_value_store.fetch('scan/github.com/rubocop-hq/rubocop/commits')
+    expect(stored_commits).to eq(actual_commits)
+  end
+
   context 'when a repository is scanned multiple times' do
     it 'only returns commits after the last scan' do
       initial_scan = scan.call('github.com/rubocop-hq/rubocop')

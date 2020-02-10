@@ -13,7 +13,7 @@ class BaseModel
       if value.nil?
         ''
       else
-        " #{name}=#{value.inspect[0..50]}"
+        " #{name}=#{value.to_s[0..50].inspect}"
       end
     end
     "#<#{self.class.name}#{attribute_desc.join('')}>"
