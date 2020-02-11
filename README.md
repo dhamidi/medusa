@@ -61,4 +61,5 @@ To take this proof of concept further:
 * make it a gem, so that it can be easily integrated with Ruby On Rails,
 * properly namespace all constants (e.g. `Medusa::WatchRepositoryAction`),
 * validate parameters more strictly in actions
+* do something useful when a match is found (like send a notification to Slack or sth)
 
